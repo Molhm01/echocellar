@@ -63,7 +63,11 @@ jobs:
             adb shell am start -n app.echocellar/.MainActivity
             sleep 15
             PID=$(adb shell pidof app.echocellar | tr -d '\r')
-            test -n "$PID" || { echo "app not running after launch"; exit 1; }
+            if [ -z "$PID" ]; then
+              echo "app not running after launch; crash log:"
+              adb logcat -d | grep -iE "echocellar|FATAL|AndroidRuntime|chromium" | tail -60
+              exit 1
+            fi
             echo "online launch ok (pid $PID)"
             # Airplane mode: all radios off
             adb shell settings put global airplane_mode_on 1
@@ -75,7 +79,11 @@ jobs:
             adb shell am start -n app.echocellar/.MainActivity
             sleep 15
             PID=$(adb shell pidof app.echocellar | tr -d '\r')
-            test -n "$PID" || { echo "app not running after airplane-mode relaunch"; exit 1; }
+            if [ -z "$PID" ]; then
+              echo "app not running after airplane-mode relaunch; crash log:"
+              adb logcat -d | grep -iE "echocellar|FATAL|AndroidRuntime|chromium" | tail -60
+              exit 1
+            fi
             echo "airplane-mode cold start ok (pid $PID)"
             adb logcat -d | grep -i "FATAL EXCEPTION" && exit 1 || true
             # restore radios
