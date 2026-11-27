@@ -1,0 +1,284 @@
+{"type": "artist", "id": "mb-a-0000", "name": "Daft Punk", "sort_name": "Daft Punk"}
+{"type": "release", "id": "mb-r-0000-00", "artist_id": "mb-a-0000", "title": "Random Access Memories", "year": 2013, "release_type": "album"}
+{"type": "track", "id": "mb-r-0000-00-t00", "release_id": "mb-r-0000-00", "title": "Give Life Back to Music", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t01", "release_id": "mb-r-0000-00", "title": "The Game of Love", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t02", "release_id": "mb-r-0000-00", "title": "Giorgio by Moroder", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t03", "release_id": "mb-r-0000-00", "title": "Within", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t04", "release_id": "mb-r-0000-00", "title": "Instant Crush", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t05", "release_id": "mb-r-0000-00", "title": "Lose Yourself to Dance", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t06", "release_id": "mb-r-0000-00", "title": "Touch", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t07", "release_id": "mb-r-0000-00", "title": "Get Lucky", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t08", "release_id": "mb-r-0000-00", "title": "Beyond", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t09", "release_id": "mb-r-0000-00", "title": "Motherboard", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t10", "release_id": "mb-r-0000-00", "title": "Fragments of Time", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t11", "release_id": "mb-r-0000-00", "title": "Doin' It Right", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0000-00-t12", "release_id": "mb-r-0000-00", "title": "Contact", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0001", "name": "Radiohead", "sort_name": "Radiohead"}
+{"type": "release", "id": "mb-r-0001-00", "artist_id": "mb-a-0001", "title": "OK Computer", "year": 1997, "release_type": "album"}
+{"type": "track", "id": "mb-r-0001-00-t00", "release_id": "mb-r-0001-00", "title": "Airbag", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t01", "release_id": "mb-r-0001-00", "title": "Paranoid Android", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t02", "release_id": "mb-r-0001-00", "title": "Subterranean Homesick Alien", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t03", "release_id": "mb-r-0001-00", "title": "Exit Music (For a Film)", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t04", "release_id": "mb-r-0001-00", "title": "Let Down", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t05", "release_id": "mb-r-0001-00", "title": "Karma Police", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t06", "release_id": "mb-r-0001-00", "title": "Fitter Happier", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t07", "release_id": "mb-r-0001-00", "title": "Electioneering", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t08", "release_id": "mb-r-0001-00", "title": "Climbing Up the Walls", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t09", "release_id": "mb-r-0001-00", "title": "No Surprises", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t10", "release_id": "mb-r-0001-00", "title": "Lucky", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0001-00-t11", "release_id": "mb-r-0001-00", "title": "The Tourist", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0002", "name": "Miles Davis", "sort_name": "Miles Davis"}
+{"type": "release", "id": "mb-r-0002-00", "artist_id": "mb-a-0002", "title": "Kind of Blue", "year": 1959, "release_type": "album"}
+{"type": "track", "id": "mb-r-0002-00-t00", "release_id": "mb-r-0002-00", "title": "So What", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0002-00-t01", "release_id": "mb-r-0002-00", "title": "Freddie Freeloader", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0002-00-t02", "release_id": "mb-r-0002-00", "title": "Blue in Green", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0002-00-t03", "release_id": "mb-r-0002-00", "title": "All Blues", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0002-00-t04", "release_id": "mb-r-0002-00", "title": "Flamenco Sketches", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0003", "name": "Bjork", "sort_name": "Bjork"}
+{"type": "release", "id": "mb-r-0003-00", "artist_id": "mb-a-0003", "title": "Homogenic", "year": 1997, "release_type": "album"}
+{"type": "track", "id": "mb-r-0003-00-t00", "release_id": "mb-r-0003-00", "title": "Hunter", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t01", "release_id": "mb-r-0003-00", "title": "Joga", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t02", "release_id": "mb-r-0003-00", "title": "Unravel", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t03", "release_id": "mb-r-0003-00", "title": "Bachelorette", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t04", "release_id": "mb-r-0003-00", "title": "All Neon Like", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t05", "release_id": "mb-r-0003-00", "title": "5 Years", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t06", "release_id": "mb-r-0003-00", "title": "Immature", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t07", "release_id": "mb-r-0003-00", "title": "Alarm Call", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t08", "release_id": "mb-r-0003-00", "title": "Pluto", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0003-00-t09", "release_id": "mb-r-0003-00", "title": "All Is Full of Love", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0004", "name": "Kendrick Lamar", "sort_name": "Kendrick Lamar"}
+{"type": "release", "id": "mb-r-0004-00", "artist_id": "mb-a-0004", "title": "good kid, m.A.A.d city", "year": 2012, "release_type": "album"}
+{"type": "track", "id": "mb-r-0004-00-t00", "release_id": "mb-r-0004-00", "title": "Sherane a.k.a Master Splinter's Daughter", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t01", "release_id": "mb-r-0004-00", "title": "Bitch, Don't Kill My Vibe", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t02", "release_id": "mb-r-0004-00", "title": "Backseat Freestyle", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t03", "release_id": "mb-r-0004-00", "title": "The Art of Peer Pressure", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t04", "release_id": "mb-r-0004-00", "title": "Money Trees", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t05", "release_id": "mb-r-0004-00", "title": "Poetic Justice", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t06", "release_id": "mb-r-0004-00", "title": "good kid", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t07", "release_id": "mb-r-0004-00", "title": "m.A.A.d city", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t08", "release_id": "mb-r-0004-00", "title": "Swimming Pools (Drank)", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t09", "release_id": "mb-r-0004-00", "title": "Sing About Me, I'm Dying of Thirst", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t10", "release_id": "mb-r-0004-00", "title": "Real", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0004-00-t11", "release_id": "mb-r-0004-00", "title": "Compton", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0005", "name": "Aphex Twin", "sort_name": "Aphex Twin"}
+{"type": "release", "id": "mb-r-0005-00", "artist_id": "mb-a-0005", "title": "Selected Ambient Works 85-92", "year": 1992, "release_type": "album"}
+{"type": "track", "id": "mb-r-0005-00-t00", "release_id": "mb-r-0005-00", "title": "Xtal", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t01", "release_id": "mb-r-0005-00", "title": "Tha", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t02", "release_id": "mb-r-0005-00", "title": "Pulsewidth", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t03", "release_id": "mb-r-0005-00", "title": "Ageispolis", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t04", "release_id": "mb-r-0005-00", "title": "I", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t05", "release_id": "mb-r-0005-00", "title": "Green Calx", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t06", "release_id": "mb-r-0005-00", "title": "Heliosphan", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t07", "release_id": "mb-r-0005-00", "title": "We Are the Music Makers", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t08", "release_id": "mb-r-0005-00", "title": "Schottkey 7th Path", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t09", "release_id": "mb-r-0005-00", "title": "Ptolemy", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t10", "release_id": "mb-r-0005-00", "title": "Hedphelym", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t11", "release_id": "mb-r-0005-00", "title": "Delphium", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0005-00-t12", "release_id": "mb-r-0005-00", "title": "Actium", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0006", "name": "Fleetwood Mac", "sort_name": "Fleetwood Mac"}
+{"type": "release", "id": "mb-r-0006-00", "artist_id": "mb-a-0006", "title": "Rumours", "year": 1977, "release_type": "album"}
+{"type": "track", "id": "mb-r-0006-00-t00", "release_id": "mb-r-0006-00", "title": "Second Hand News", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t01", "release_id": "mb-r-0006-00", "title": "Dreams", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t02", "release_id": "mb-r-0006-00", "title": "Never Going Back Again", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t03", "release_id": "mb-r-0006-00", "title": "Don't Stop", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t04", "release_id": "mb-r-0006-00", "title": "Go Your Own Way", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t05", "release_id": "mb-r-0006-00", "title": "Songbird", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t06", "release_id": "mb-r-0006-00", "title": "The Chain", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t07", "release_id": "mb-r-0006-00", "title": "You Make Loving Fun", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t08", "release_id": "mb-r-0006-00", "title": "I Don't Want to Know", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t09", "release_id": "mb-r-0006-00", "title": "Oh Daddy", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0006-00-t10", "release_id": "mb-r-0006-00", "title": "Gold Dust Woman", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0007", "name": "Nirvana", "sort_name": "Nirvana"}
+{"type": "release", "id": "mb-r-0007-00", "artist_id": "mb-a-0007", "title": "Nevermind", "year": 1991, "release_type": "album"}
+{"type": "track", "id": "mb-r-0007-00-t00", "release_id": "mb-r-0007-00", "title": "Smells Like Teen Spirit", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t01", "release_id": "mb-r-0007-00", "title": "In Bloom", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t02", "release_id": "mb-r-0007-00", "title": "Come as You Are", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t03", "release_id": "mb-r-0007-00", "title": "Breed", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t04", "release_id": "mb-r-0007-00", "title": "Lithium", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t05", "release_id": "mb-r-0007-00", "title": "Polly", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t06", "release_id": "mb-r-0007-00", "title": "Territorial Pissings", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t07", "release_id": "mb-r-0007-00", "title": "Drain You", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t08", "release_id": "mb-r-0007-00", "title": "Lounge Act", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t09", "release_id": "mb-r-0007-00", "title": "Stay Away", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t10", "release_id": "mb-r-0007-00", "title": "On a Plain", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0007-00-t11", "release_id": "mb-r-0007-00", "title": "Something in the Way", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0008", "name": "Beyonce", "sort_name": "Beyonce"}
+{"type": "release", "id": "mb-r-0008-00", "artist_id": "mb-a-0008", "title": "Renaissance", "year": 2022, "release_type": "album"}
+{"type": "track", "id": "mb-r-0008-00-t00", "release_id": "mb-r-0008-00", "title": "I'm That Girl", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t01", "release_id": "mb-r-0008-00", "title": "Cozy", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t02", "release_id": "mb-r-0008-00", "title": "Alien Superstar", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t03", "release_id": "mb-r-0008-00", "title": "Cuff It", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t04", "release_id": "mb-r-0008-00", "title": "Energy", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t05", "release_id": "mb-r-0008-00", "title": "Break My Soul", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t06", "release_id": "mb-r-0008-00", "title": "Church Girl", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t07", "release_id": "mb-r-0008-00", "title": "Plastic Off the Sofa", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t08", "release_id": "mb-r-0008-00", "title": "Virgo's Groove", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t09", "release_id": "mb-r-0008-00", "title": "Move", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t10", "release_id": "mb-r-0008-00", "title": "Heated", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t11", "release_id": "mb-r-0008-00", "title": "Thique", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t12", "release_id": "mb-r-0008-00", "title": "All Up in Your Mind", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t13", "release_id": "mb-r-0008-00", "title": "America Has a Problem", "position": 14, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t14", "release_id": "mb-r-0008-00", "title": "Pure/Honey", "position": 15, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0008-00-t15", "release_id": "mb-r-0008-00", "title": "Summer Renaissance", "position": 16, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0009", "name": "The Beatles", "sort_name": "The Beatles"}
+{"type": "release", "id": "mb-r-0009-00", "artist_id": "mb-a-0009", "title": "Abbey Road", "year": 1969, "release_type": "album"}
+{"type": "track", "id": "mb-r-0009-00-t00", "release_id": "mb-r-0009-00", "title": "Come Together", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t01", "release_id": "mb-r-0009-00", "title": "Something", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t02", "release_id": "mb-r-0009-00", "title": "Maxwell's Silver Hammer", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t03", "release_id": "mb-r-0009-00", "title": "Oh! Darling", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t04", "release_id": "mb-r-0009-00", "title": "Octopus's Garden", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t05", "release_id": "mb-r-0009-00", "title": "I Want You (She's So Heavy)", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t06", "release_id": "mb-r-0009-00", "title": "Here Comes the Sun", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t07", "release_id": "mb-r-0009-00", "title": "Because", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t08", "release_id": "mb-r-0009-00", "title": "You Never Give Me Your Money", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t09", "release_id": "mb-r-0009-00", "title": "Sun King", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t10", "release_id": "mb-r-0009-00", "title": "Mean Mr. Mustard", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t11", "release_id": "mb-r-0009-00", "title": "Polythene Pam", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t12", "release_id": "mb-r-0009-00", "title": "She Came In Through the Bathroom Window", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t13", "release_id": "mb-r-0009-00", "title": "Golden Slumbers", "position": 14, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t14", "release_id": "mb-r-0009-00", "title": "Carry That Weight", "position": 15, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t15", "release_id": "mb-r-0009-00", "title": "The End", "position": 16, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0009-00-t16", "release_id": "mb-r-0009-00", "title": "Her Majesty", "position": 17, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0010", "name": "Pink Floyd", "sort_name": "Pink Floyd"}
+{"type": "release", "id": "mb-r-0010-00", "artist_id": "mb-a-0010", "title": "The Dark Side of the Moon", "year": 1973, "release_type": "album"}
+{"type": "track", "id": "mb-r-0010-00-t00", "release_id": "mb-r-0010-00", "title": "Speak to Me", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t01", "release_id": "mb-r-0010-00", "title": "Breathe (In the Air)", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t02", "release_id": "mb-r-0010-00", "title": "On the Run", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t03", "release_id": "mb-r-0010-00", "title": "Time", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t04", "release_id": "mb-r-0010-00", "title": "The Great Gig in the Sky", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t05", "release_id": "mb-r-0010-00", "title": "Money", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t06", "release_id": "mb-r-0010-00", "title": "Us and Them", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t07", "release_id": "mb-r-0010-00", "title": "Any Colour You Like", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t08", "release_id": "mb-r-0010-00", "title": "Brain Damage", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0010-00-t09", "release_id": "mb-r-0010-00", "title": "Eclipse", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0011", "name": "Massive Attack", "sort_name": "Massive Attack"}
+{"type": "release", "id": "mb-r-0011-00", "artist_id": "mb-a-0011", "title": "Mezzanine", "year": 1998, "release_type": "album"}
+{"type": "track", "id": "mb-r-0011-00-t00", "release_id": "mb-r-0011-00", "title": "Angel", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t01", "release_id": "mb-r-0011-00", "title": "Risingson", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t02", "release_id": "mb-r-0011-00", "title": "Teardrop", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t03", "release_id": "mb-r-0011-00", "title": "Inertia Creeps", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t04", "release_id": "mb-r-0011-00", "title": "Exchange", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t05", "release_id": "mb-r-0011-00", "title": "Dissolved Girl", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t06", "release_id": "mb-r-0011-00", "title": "Man Next Door", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t07", "release_id": "mb-r-0011-00", "title": "Black Milk", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t08", "release_id": "mb-r-0011-00", "title": "Mezzanine", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t09", "release_id": "mb-r-0011-00", "title": "Group Four", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0011-00-t10", "release_id": "mb-r-0011-00", "title": "(Exchange)", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0012", "name": "Talking Heads", "sort_name": "Talking Heads"}
+{"type": "release", "id": "mb-r-0012-00", "artist_id": "mb-a-0012", "title": "Remain in Light", "year": 1980, "release_type": "album"}
+{"type": "track", "id": "mb-r-0012-00-t00", "release_id": "mb-r-0012-00", "title": "Born Under Punches (The Heat Goes On)", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t01", "release_id": "mb-r-0012-00", "title": "Crosseyed and Painless", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t02", "release_id": "mb-r-0012-00", "title": "The Great Curve", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t03", "release_id": "mb-r-0012-00", "title": "Once in a Lifetime", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t04", "release_id": "mb-r-0012-00", "title": "Houses in Motion", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t05", "release_id": "mb-r-0012-00", "title": "Seen and Not Seen", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t06", "release_id": "mb-r-0012-00", "title": "Listening Wind", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0012-00-t07", "release_id": "mb-r-0012-00", "title": "The Overload", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0013", "name": "LCD Soundsystem", "sort_name": "LCD Soundsystem"}
+{"type": "release", "id": "mb-r-0013-00", "artist_id": "mb-a-0013", "title": "Sound of Silver", "year": 2007, "release_type": "album"}
+{"type": "track", "id": "mb-r-0013-00-t00", "release_id": "mb-r-0013-00", "title": "Get Innocuous!", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t01", "release_id": "mb-r-0013-00", "title": "Time to Get Away", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t02", "release_id": "mb-r-0013-00", "title": "North American Scum", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t03", "release_id": "mb-r-0013-00", "title": "Someone Great", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t04", "release_id": "mb-r-0013-00", "title": "All My Friends", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t05", "release_id": "mb-r-0013-00", "title": "Us v Them", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t06", "release_id": "mb-r-0013-00", "title": "Watch the Tapes", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t07", "release_id": "mb-r-0013-00", "title": "Sound of Silver", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0013-00-t08", "release_id": "mb-r-0013-00", "title": "New York, I Love You but You're Bringing Me Down", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0014", "name": "Burial", "sort_name": "Burial"}
+{"type": "release", "id": "mb-r-0014-00", "artist_id": "mb-a-0014", "title": "Untrue", "year": 2007, "release_type": "album"}
+{"type": "track", "id": "mb-r-0014-00-t00", "release_id": "mb-r-0014-00", "title": "Untitled", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t01", "release_id": "mb-r-0014-00", "title": "Archangel", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t02", "release_id": "mb-r-0014-00", "title": "Near Dark", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t03", "release_id": "mb-r-0014-00", "title": "Ghost Hardware", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t04", "release_id": "mb-r-0014-00", "title": "Endorphin", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t05", "release_id": "mb-r-0014-00", "title": "Etched Headplate", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t06", "release_id": "mb-r-0014-00", "title": "In McDonalds", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t07", "release_id": "mb-r-0014-00", "title": "Untrue", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t08", "release_id": "mb-r-0014-00", "title": "Shell of Light", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t09", "release_id": "mb-r-0014-00", "title": "Dog Shelter", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t10", "release_id": "mb-r-0014-00", "title": "Homeless", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t11", "release_id": "mb-r-0014-00", "title": "UK", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0014-00-t12", "release_id": "mb-r-0014-00", "title": "Raver", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0015", "name": "Taylor Swift", "sort_name": "Taylor Swift"}
+{"type": "release", "id": "mb-r-0015-00", "artist_id": "mb-a-0015", "title": "Midnights", "year": 2022, "release_type": "album"}
+{"type": "track", "id": "mb-r-0015-00-t00", "release_id": "mb-r-0015-00", "title": "Lavender Haze", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t01", "release_id": "mb-r-0015-00", "title": "Maroon", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t02", "release_id": "mb-r-0015-00", "title": "Anti-Hero", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t03", "release_id": "mb-r-0015-00", "title": "Snow on the Beach", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t04", "release_id": "mb-r-0015-00", "title": "You're on Your Own, Kid", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t05", "release_id": "mb-r-0015-00", "title": "Midnight Rain", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t06", "release_id": "mb-r-0015-00", "title": "Question...?", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t07", "release_id": "mb-r-0015-00", "title": "Vigilante Shit", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t08", "release_id": "mb-r-0015-00", "title": "Bejeweled", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t09", "release_id": "mb-r-0015-00", "title": "Labyrinth", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t10", "release_id": "mb-r-0015-00", "title": "Karma", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t11", "release_id": "mb-r-0015-00", "title": "Sweet Nothing", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0015-00-t12", "release_id": "mb-r-0015-00", "title": "Mastermind", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0016", "name": "Led Zeppelin", "sort_name": "Led Zeppelin"}
+{"type": "release", "id": "mb-r-0016-00", "artist_id": "mb-a-0016", "title": "Led Zeppelin IV", "year": 1971, "release_type": "album"}
+{"type": "track", "id": "mb-r-0016-00-t00", "release_id": "mb-r-0016-00", "title": "Black Dog", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t01", "release_id": "mb-r-0016-00", "title": "Rock and Roll", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t02", "release_id": "mb-r-0016-00", "title": "The Battle of Evermore", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t03", "release_id": "mb-r-0016-00", "title": "Stairway to Heaven", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t04", "release_id": "mb-r-0016-00", "title": "Misty Mountain Hop", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t05", "release_id": "mb-r-0016-00", "title": "Four Sticks", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t06", "release_id": "mb-r-0016-00", "title": "Going to California", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0016-00-t07", "release_id": "mb-r-0016-00", "title": "When the Levee Breaks", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0017", "name": "Stevie Wonder", "sort_name": "Stevie Wonder"}
+{"type": "release", "id": "mb-r-0017-00", "artist_id": "mb-a-0017", "title": "Songs in the Key of Life", "year": 1976, "release_type": "album"}
+{"type": "track", "id": "mb-r-0017-00-t00", "release_id": "mb-r-0017-00", "title": "Love's in Need of Love Today", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t01", "release_id": "mb-r-0017-00", "title": "Have a Talk with God", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t02", "release_id": "mb-r-0017-00", "title": "Village Ghetto Land", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t03", "release_id": "mb-r-0017-00", "title": "Contusion", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t04", "release_id": "mb-r-0017-00", "title": "Sir Duke", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t05", "release_id": "mb-r-0017-00", "title": "I Wish", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t06", "release_id": "mb-r-0017-00", "title": "Knocks Me Off My Feet", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t07", "release_id": "mb-r-0017-00", "title": "Pastime Paradise", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t08", "release_id": "mb-r-0017-00", "title": "Summer Soft", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t09", "release_id": "mb-r-0017-00", "title": "Ordinary Pain", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t10", "release_id": "mb-r-0017-00", "title": "Isn't She Lovely", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t11", "release_id": "mb-r-0017-00", "title": "Joy Inside My Tears", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t12", "release_id": "mb-r-0017-00", "title": "Black Man", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t13", "release_id": "mb-r-0017-00", "title": "Ngiculela - Es Una Historia - I Am Singing", "position": 14, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t14", "release_id": "mb-r-0017-00", "title": "If It's Magic", "position": 15, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t15", "release_id": "mb-r-0017-00", "title": "As", "position": 16, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0017-00-t16", "release_id": "mb-r-0017-00", "title": "Another Star", "position": 17, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0018", "name": "Portishead", "sort_name": "Portishead"}
+{"type": "release", "id": "mb-r-0018-00", "artist_id": "mb-a-0018", "title": "Dummy", "year": 1994, "release_type": "album"}
+{"type": "track", "id": "mb-r-0018-00-t00", "release_id": "mb-r-0018-00", "title": "Mysterons", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t01", "release_id": "mb-r-0018-00", "title": "Sour Times", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t02", "release_id": "mb-r-0018-00", "title": "Strangers", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t03", "release_id": "mb-r-0018-00", "title": "It Could Be Sweet", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t04", "release_id": "mb-r-0018-00", "title": "Wandering Star", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t05", "release_id": "mb-r-0018-00", "title": "Numb", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t06", "release_id": "mb-r-0018-00", "title": "Roads", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t07", "release_id": "mb-r-0018-00", "title": "Pedestal", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t08", "release_id": "mb-r-0018-00", "title": "Biscuit", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0018-00-t09", "release_id": "mb-r-0018-00", "title": "Glory Box", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "artist", "id": "mb-a-0019", "name": "Outkast", "sort_name": "Outkast"}
+{"type": "release", "id": "mb-r-0019-00", "artist_id": "mb-a-0019", "title": "Stankonia", "year": 2000, "release_type": "album"}
+{"type": "track", "id": "mb-r-0019-00-t00", "release_id": "mb-r-0019-00", "title": "Intro", "position": 1, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t01", "release_id": "mb-r-0019-00", "title": "Gasoline Dreams", "position": 2, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t02", "release_id": "mb-r-0019-00", "title": "I'm Cool (Interlude)", "position": 3, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t03", "release_id": "mb-r-0019-00", "title": "So Fresh, So Clean", "position": 4, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t04", "release_id": "mb-r-0019-00", "title": "Ms. Jackson", "position": 5, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t05", "release_id": "mb-r-0019-00", "title": "Snappin' & Trappin'", "position": 6, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t06", "release_id": "mb-r-0019-00", "title": "D.F. (Interlude)", "position": 7, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t07", "release_id": "mb-r-0019-00", "title": "Spaghetti Junction", "position": 8, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t08", "release_id": "mb-r-0019-00", "title": "Kim & Cookie (Interlude)", "position": 9, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t09", "release_id": "mb-r-0019-00", "title": "I'll Call B4 I Cum", "position": 10, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t10", "release_id": "mb-r-0019-00", "title": "B.O.B.", "position": 11, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t11", "release_id": "mb-r-0019-00", "title": "Xplosion", "position": 12, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t12", "release_id": "mb-r-0019-00", "title": "Good Hair (Interlude)", "position": 13, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t13", "release_id": "mb-r-0019-00", "title": "We Luv Deez Hoez", "position": 14, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t14", "release_id": "mb-r-0019-00", "title": "Humble Mumble", "position": 15, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t15", "release_id": "mb-r-0019-00", "title": "Drinkin' Again (Interlude)", "position": 16, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t16", "release_id": "mb-r-0019-00", "title": "?", "position": 17, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t17", "release_id": "mb-r-0019-00", "title": "Red Velvet", "position": 18, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t18", "release_id": "mb-r-0019-00", "title": "Cruisin' in the ATL (Interlude)", "position": 19, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t19", "release_id": "mb-r-0019-00", "title": "Gangsta Shit", "position": 20, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t20", "release_id": "mb-r-0019-00", "title": "Toilet Tisha", "position": 21, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t21", "release_id": "mb-r-0019-00", "title": "Slum Beautiful", "position": 22, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t22", "release_id": "mb-r-0019-00", "title": "Pre-Nump (Interlude)", "position": 23, "duration_ms": null, "media_url": null}
+{"type": "track", "id": "mb-r-0019-00-t23", "release_id": "mb-r-0019-00", "title": "Stankonia (Stanklove)", "position": 24, "duration_ms": null, "media_url": null}

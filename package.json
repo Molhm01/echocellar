@@ -1,0 +1,68 @@
+{
+  "name": "echocellar",
+  "productName": "Echocellar",
+  "version": "0.1.0",
+  "description": "Offline-first personal music player for your own collection",
+  "main": "src/main.js",
+  "license": "MIT",
+  "author": "Mj Alasri",
+  "scripts": {
+    "start": "electron .",
+    "test:unit": "node test/unit.mjs",
+    "test:e2e": "node test/e2e.mjs",
+    "dist": "electron-builder --win nsis --x64 --publish never",
+    "dist:linux": "electron-builder --linux dir"
+  },
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.0",
+    "playwright-core": "^1.48.0"
+  },
+  "dependencies": {
+    "chokidar": "^3.6.0",
+    "ffmpeg-static": "^5.2.0",
+    "music-metadata": "^7.14.0",
+    "sql.js": "^1.12.0"
+  },
+  "build": {
+    "appId": "app.echocellar",
+    "productName": "Echocellar",
+    "files": [
+      "src/**",
+      "assets/**",
+      "node_modules/**",
+      "package.json",
+      "THIRD_PARTY_NOTICES.md",
+      "LICENSE"
+    ],
+    "extraResources": [
+      {
+        "from": "build/bin/win/ffmpeg.exe",
+        "to": "bin/ffmpeg.exe"
+      },
+      {
+        "from": "assets/catalog/starter-catalog.jsonl",
+        "to": "catalog/starter-catalog.jsonl"
+      }
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icon.png",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": true,
+      "shortcutName": "Echocellar",
+      "createDesktopShortcut": true
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "category": "Audio"
+    },
+    "directories": {
+      "output": "release"
+    }
+  }
+}

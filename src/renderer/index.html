@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Echocellar</title>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; media-src 'self' media:; img-src 'self' media: data:; style-src 'self' 'unsafe-inline'; script-src 'self'">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <div id="brand">
+      <img src="../../assets/logo.svg" alt="" id="brand-mark">
+      <span id="brand-name">echocellar</span>
+    </div>
+    <nav id="nav">
+      <button class="nav-btn" data-view="home">Home</button>
+      <button class="nav-btn" data-view="search">Search</button>
+      <button class="nav-btn" data-view="library">Library</button>
+      <button class="nav-btn" data-view="playlists">Playlists</button>
+      <button class="nav-btn" data-view="discover">Discover</button>
+      <button class="nav-btn" data-view="history">History</button>
+      <button class="nav-btn" data-view="catalog">Catalog</button>
+      <button class="nav-btn" data-view="settings">Settings</button>
+    </nav>
+    <div id="import-actions">
+      <button id="btn-import-copy" class="ghost">Import (copy in)</button>
+      <button id="btn-import-ref" class="ghost">Import (in place)</button>
+      <button id="btn-import-folder" class="ghost">Import folder</button>
+      <button id="btn-import-spotify" class="ghost">Import Spotify export</button>
+      <button id="btn-add-watch" class="ghost">Add watched folder</button>
+    </div>
+    <div id="review-badge" class="hidden"></div>
+  </aside>
+
+  <main id="content">
+    <div id="view"></div>
+  </main>
+
+  <aside id="queue-drawer" class="hidden">
+    <div class="drawer-head">
+      <h3>Queue</h3>
+      <button id="queue-close" class="ghost">Close</button>
+    </div>
+    <ol id="queue-list"></ol>
+  </aside>
+
+  <section id="nowplaying">
+    <div id="np-left">
+      <img id="np-art" src="../../assets/logo.svg" alt="">
+      <div id="np-meta">
+        <div id="np-title">Nothing playing</div>
+        <div id="np-artist"></div>
+        <div id="np-codec"></div>
+      </div>
+    </div>
+    <div id="np-center">
+      <div id="np-buttons">
+        <button id="btn-shuffle" title="Shuffle (S)">&#8640;</button>
+        <button id="btn-prev" title="Previous (Ctrl+Left)">&#9198;</button>
+        <button id="btn-play" title="Play/Pause (Space)">&#9654;</button>
+        <button id="btn-next" title="Next (Ctrl+Right)">&#9197;</button>
+        <button id="btn-repeat" title="Repeat (R)">&#128257;</button>
+      </div>
+      <div id="np-progress-row">
+        <span id="np-elapsed">0:00</span>
+        <input type="range" id="np-progress" min="0" max="1000" value="0">
+        <span id="np-duration">0:00</span>
+      </div>
+    </div>
+    <div id="np-right">
+      <button id="btn-av" class="hidden" title="Switch audio/video (V)">Video</button>
+      <button id="btn-lyrics" title="Lyrics (L)">Lyrics</button>
+      <button id="btn-queue" title="Queue (Q)">Queue</button>
+      <button id="btn-fav" title="Favorite (F)">&#9825;</button>
+      <input type="range" id="np-volume" min="0" max="100" value="90" title="Volume">
+    </div>
+  </section>
+
+  <section id="stage" class="hidden">
+    <div id="stage-head">
+      <span id="stage-title"></span>
+      <button id="stage-close" class="ghost">Close</button>
+    </div>
+    <div id="stage-body">
+      <video id="stage-video" class="hidden" controls playsinline></video>
+      <div id="stage-lyrics"></div>
+    </div>
+  </section>
+</div>
+
+<div id="drop-hint" class="hidden">Drop music to import</div>
+<div id="toast" class="hidden"></div>
+<audio id="audio-el"></audio>
+
+<script src="js/queue.js"></script>
+<script src="js/player.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

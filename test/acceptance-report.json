@@ -1,0 +1,105 @@
+{
+  "home": "/tmp/echocellar-e2e-QdBmzr",
+  "results": [
+    {
+      "name": "import music folder",
+      "ok": true,
+      "detail": "{\"added\":5,\"updated\":0,\"duplicate\":0,\"error\":0,\"ignored\":2,\"errors\":[],\"linked_missing\":0}"
+    },
+    {
+      "name": "spotify import: 2 matched + 1 missing, 3 history entries",
+      "ok": true,
+      "detail": "{\"playlists\":[{\"name\":\"Late Drive\",\"matched\":2,\"review\":0,\"missing\":1,\"skipped\":null}],\"library\":null,\"history\":{\"imported\":3,\"duplicates\":0},\"files\":[{\"name\":\"Playlist1.json\",\"kind\":\"playlists\"},{\"name\":\"StreamingHistory_music_0.json\",\"kind\":\"history\"}]}"
+    },
+    {
+      "name": "playlist \"Late Drive\" exists",
+      "ok": true
+    },
+    {
+      "name": "search finds Emberline",
+      "ok": true,
+      "detail": "FLAC 30000ms"
+    },
+    {
+      "name": "FLAC plays",
+      "ok": true
+    },
+    {
+      "name": "codec details shown",
+      "ok": true,
+      "detail": "FLAC · 44.1 kHz · 16-bit"
+    },
+    {
+      "name": "synced lyrics shown",
+      "ok": true,
+      "detail": "8 lines"
+    },
+    {
+      "name": "click lyric line seeks",
+      "ok": true,
+      "detail": "t=15.3"
+    },
+    {
+      "name": "video mode plays",
+      "ok": true,
+      "detail": "{\"paused\":false,\"t\":22.346126,\"src\":\"media://video/1\"}"
+    },
+    {
+      "name": "video offset applied (position + 5s intro)",
+      "ok": true,
+      "detail": "audio=17.3 video=22.3"
+    },
+    {
+      "name": "audio+video switch = one history session",
+      "ok": true,
+      "detail": "1 session(s), ms=3188"
+    },
+    {
+      "name": "missing song auto-links in original position",
+      "ok": true,
+      "detail": "{\"linked\":1,\"status\":\"matched\",\"title\":\"Midnight Sun\"}"
+    },
+    {
+      "name": "playlist order and repeat preserved",
+      "ok": true
+    },
+    {
+      "name": "reimport is a no-op",
+      "ok": true,
+      "detail": "{\"name\":\"Late Drive\",\"matched\":null,\"review\":null,\"missing\":null,\"skipped\":\"identical\"}"
+    },
+    {
+      "name": "search works offline",
+      "ok": true
+    },
+    {
+      "name": "shuffle covers every entry once",
+      "ok": true
+    },
+    {
+      "name": "recommendations work offline",
+      "ok": true,
+      "detail": "cold-start artist picker"
+    },
+    {
+      "name": "statistics work offline",
+      "ok": true,
+      "detail": "{\"events\":4,\"plays\":4,\"skips\":0,\"ms_listened\":73188}"
+    },
+    {
+      "name": "queue and position restore on reopen",
+      "ok": true,
+      "detail": "{\"n\":1,\"t\":6.024061}"
+    },
+    {
+      "name": "ALAC (24-bit/48kHz) plays losslessly via ffmpeg",
+      "ok": true,
+      "detail": "ALAC · 48 kHz · 24-bit"
+    },
+    {
+      "name": "ALAC codec details shown",
+      "ok": true,
+      "detail": "ALAC · 48 kHz · 24-bit"
+    }
+  ]
+}
