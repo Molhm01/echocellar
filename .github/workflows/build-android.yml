@@ -1,0 +1,85 @@
+name: Build Android app
+on:
+  workflow_dispatch:
+  push:
+    tags: ['mobile-v*']
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - name: Build web bundle and sync
+        working-directory: mobile
+        run: |
+          npm ci
+          node build.cjs
+          npx cap sync android
+      - name: Assemble debug APK
+        working-directory: mobile/android
+        run: ./gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: echocellar-android-apk
+          path: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+      - name: Attach APK to a GitHub Release (tag builds)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: mobile/android/app/build/outputs/apk/debug/app-debug.apk
+          generate_release_notes: true
+
+  airplane-mode-smoke:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: echocellar-android-apk
+          path: apk
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Boot emulator, install, run airplane-mode cold start test
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          profile: pixel_6
+          script: |
+            adb wait-for-device
+            adb install -r apk/app-debug.apk
+            adb shell am start -n app.echocellar/.MainActivity
+            sleep 15
+            PID=$(adb shell pidof app.echocellar | tr -d '\r')
+            test -n "$PID" || { echo "app not running after launch"; exit 1; }
+            echo "online launch ok (pid $PID)"
+            # Airplane mode: all radios off
+            adb shell settings put global airplane_mode_on 1
+            adb shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true
+            adb shell svc wifi disable
+            adb shell svc data disable
+            sleep 3
+            adb shell am force-stop app.echocellar
+            adb shell am start -n app.echocellar/.MainActivity
+            sleep 15
+            PID=$(adb shell pidof app.echocellar | tr -d '\r')
+            test -n "$PID" || { echo "app not running after airplane-mode relaunch"; exit 1; }
+            echo "airplane-mode cold start ok (pid $PID)"
+            adb logcat -d | grep -i "FATAL EXCEPTION" && exit 1 || true
+            # restore radios
+            adb shell settings put global airplane_mode_on 0
+            adb shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false
+            adb shell svc wifi enable
+            echo "AIRPLANE MODE SMOKE PASS"

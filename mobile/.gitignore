@@ -1,0 +1,7 @@
+node_modules/
+www/js/bundle.js
+src/generated/
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties

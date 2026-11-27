@@ -1,0 +1,26 @@
+{
+  "name": "echocellar-mobile",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.cjs",
+    "sync": "cap sync android",
+    "add:android": "cap add android"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@capacitor/android": "^8.6.3",
+    "@capacitor/cli": "^8.6.3",
+    "@capacitor/core": "^8.6.3",
+    "@capacitor/filesystem": "^8.1.5",
+    "buffer": "^6.0.3",
+    "esbuild": "^0.24.2",
+    "js-sha1": "^0.9.0",
+    "music-metadata-browser": "^2.5.11",
+    "sql.js": "1.17"
+  },
+  "private": true
+}
