@@ -59,35 +59,4 @@ jobs:
           profile: pixel_6
           script: |
             adb wait-for-device
-            adb install -r apk/app-debug.apk
-            adb shell am start -n app.echocellar/.MainActivity
-            sleep 15
-            PID=$(adb shell pidof app.echocellar | tr -d '\r')
-            if [ -z "$PID" ]; then
-              echo "app not running after launch; crash log:"
-              adb logcat -d | grep -iE "echocellar|FATAL|AndroidRuntime|chromium" | tail -60
-              exit 1
-            fi
-            echo "online launch ok (pid $PID)"
-            # Airplane mode: all radios off
-            adb shell settings put global airplane_mode_on 1
-            adb shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state true
-            adb shell svc wifi disable
-            adb shell svc data disable
-            sleep 3
-            adb shell am force-stop app.echocellar
-            adb shell am start -n app.echocellar/.MainActivity
-            sleep 15
-            PID=$(adb shell pidof app.echocellar | tr -d '\r')
-            if [ -z "$PID" ]; then
-              echo "app not running after airplane-mode relaunch; crash log:"
-              adb logcat -d | grep -iE "echocellar|FATAL|AndroidRuntime|chromium" | tail -60
-              exit 1
-            fi
-            echo "airplane-mode cold start ok (pid $PID)"
-            adb logcat -d | grep -i "FATAL EXCEPTION" && exit 1 || true
-            # restore radios
-            adb shell settings put global airplane_mode_on 0
-            adb shell am broadcast -a android.intent.action.AIRPLANE_MODE --ez state false
-            adb shell svc wifi enable
-            echo "AIRPLANE MODE SMOKE PASS"
+            bash mobile/ci/airplane-smoke.sh apk/app-debug.apk
