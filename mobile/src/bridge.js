@@ -4,6 +4,7 @@
 
 const recs = require('../../src/lib/recs');
 const stats = require('../../src/stats');
+const spotify = require('../../src/lib/spotify');
 const importer = require('./import');
 
 let db = null;
@@ -153,8 +154,38 @@ const api = {
   // ---- import ----
   async importFiles(fileList, onProgress) {
     const out = await importer.importFiles(db, fileList, onProgress);
-    if (out.imported) { db.save(); emitChange(); } else db.saveSoon();
+    if (out.imported) {
+      // New audio may satisfy pending Spotify entries: link them in place.
+      spotify.relinkUnmatchedEntries(db);
+      db.save();
+      emitChange();
+    } else db.saveSoon();
     return out;
+  },
+
+  // ---- Spotify export import + playlists ----
+  playlists() {
+    return db.all(`SELECT p.id, p.name, p.source,
+        COUNT(e.id) AS entries,
+        SUM(CASE WHEN e.status = 'matched' THEN 1 ELSE 0 END) AS matched
+      FROM playlists p LEFT JOIN playlist_entries e ON e.playlist_id = p.id
+      GROUP BY p.id ORDER BY p.updated_at DESC`);
+  },
+  playlistEntries(id) {
+    return db.all(`SELECT e.id AS entry_id, e.position, e.status,
+        e.req_title, e.req_artist, e.req_album, e.req_duration_ms,
+        t.id, t.title, t.artist, t.album, t.duration_ms
+      FROM playlist_entries e LEFT JOIN tracks t ON t.id = e.track_id
+      WHERE e.playlist_id = ? ORDER BY e.position`, [id]);
+  },
+  async importSpotify(fileList) {
+    const files = [];
+    for (const f of fileList) files.push({ name: f.name, text: await f.text() });
+    const result = spotify.importSpotifyExport(db, files);
+    spotify.relinkUnmatchedEntries(db);
+    db.save();
+    emitChange();
+    return result;
   },
 };
 

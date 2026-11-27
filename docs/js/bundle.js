@@ -5801,6 +5801,336 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
     }
   });
 
+  // ../src/lib/match.js
+  var require_match = __commonJS({
+    "../src/lib/match.js"(exports2, module2) {
+      "use strict";
+      init_buffer_global();
+      var { normalize, similarity, versionTokensOf } = require_util();
+      var DURATION_TOLERANCE_MS = 3e3;
+      var AUTO_THRESHOLD = 0.9;
+      var REVIEW_THRESHOLD = 0.68;
+      var UNIQUE_GAP = 0.08;
+      function durationScore(reqMs, trackMs) {
+        if (!reqMs || !trackMs) return 0.5;
+        const diff = Math.abs(reqMs - trackMs);
+        if (diff <= DURATION_TOLERANCE_MS) return 1;
+        if (diff >= 3e4) return 0;
+        return 1 - (diff - DURATION_TOLERANCE_MS) / (3e4 - DURATION_TOLERANCE_MS);
+      }
+      function versionConflict(reqTitle, trackTitle) {
+        const a = versionTokensOf(reqTitle);
+        const b = versionTokensOf(trackTitle);
+        const sa = new Set(a), sb = new Set(b);
+        const diff = a.filter((t) => !sb.has(t)).concat(b.filter((t) => !sa.has(t)));
+        return diff.length > 0 ? diff : null;
+      }
+      function scoreCandidate(request, track) {
+        if (request.isrc && track.isrc && request.isrc.toUpperCase() === track.isrc.toUpperCase()) {
+          return { score: 1, reason: "isrc" };
+        }
+        const titleSim = similarity(request.title, track.title);
+        const artistSim = similarity(request.artist, track.artist);
+        const albumSim = request.album && track.album ? similarity(request.album, track.album) : 0.5;
+        const dur = durationScore(request.duration_ms, track.duration_ms);
+        let score = 0.4 * titleSim + 0.3 * artistSim + 0.1 * albumSim + 0.2 * dur;
+        const conflict = versionConflict(request.title || "", track.title || "");
+        if (conflict) score = Math.min(score, 0.85);
+        return { score, versionConflict: conflict || void 0 };
+      }
+      function decide(request, candidates) {
+        if (!candidates.length) return { status: "missing" };
+        const scored = candidates.map((t) => ({ track: t, ...scoreCandidate(request, t) })).sort((a, b) => b.score - a.score);
+        const reqArtist = normalize(request.artist);
+        const reqTitle = normalize(request.title);
+        const exact = scored.filter(
+          ({ track }) => normalize(track.artist) === reqArtist && normalize(track.title) === reqTitle
+        );
+        if (exact.length) {
+          const durOk = exact.filter(
+            ({ track }) => !request.duration_ms || !track.duration_ms || Math.abs(request.duration_ms - track.duration_ms) <= DURATION_TOLERANCE_MS
+          );
+          if (exact.length === 1 && (durOk.length === 1 || !request.duration_ms)) {
+            if (!exact[0].versionConflict) return { status: "matched", trackId: exact[0].track.id };
+          }
+        }
+        const top = scored[0];
+        if (!top || top.score < REVIEW_THRESHOLD) return { status: "missing" };
+        const runnerUp = scored[1];
+        const clear = !runnerUp || top.score - runnerUp.score >= UNIQUE_GAP;
+        if (top.score >= AUTO_THRESHOLD && clear && !top.versionConflict) {
+          return { status: "matched", trackId: top.track.id };
+        }
+        return {
+          status: "review",
+          candidates: scored.filter((s) => s.score >= REVIEW_THRESHOLD).slice(0, 5).map(({ track, score, versionConflict: vc }) => ({
+            track_id: track.id,
+            title: track.title,
+            artist: track.artist,
+            album: track.album,
+            duration_ms: track.duration_ms,
+            score: Math.round(score * 1e3) / 1e3,
+            version_conflict: vc || null
+          }))
+        };
+      }
+      module2.exports = { decide, scoreCandidate, durationScore, versionConflict, AUTO_THRESHOLD, REVIEW_THRESHOLD };
+    }
+  });
+
+  // ../src/lib/spotify.js
+  var require_spotify = __commonJS({
+    "../src/lib/spotify.js"(exports2, module2) {
+      "use strict";
+      init_buffer_global();
+      var { normalize, sha1String } = require_util();
+      var { decide } = require_match();
+      function safeParse(text) {
+        try {
+          return JSON.parse(text);
+        } catch {
+          return null;
+        }
+      }
+      function parseSpotifyFile(name, text) {
+        const data = safeParse(text);
+        if (data == null) return null;
+        const base = (name || "").toLowerCase();
+        const playlistsArr = Array.isArray(data) ? data : Array.isArray(data.playlists) ? data.playlists : null;
+        if (playlistsArr && playlistsArr.length && playlistsArr[0] && (playlistsArr[0].items || playlistsArr[0].tracks) && (base.includes("playlist") || playlistsArr[0].name != null)) {
+          const playlists = playlistsArr.map((p) => {
+            const items = (p.items || p.tracks || []).map((it) => {
+              const t = it.track || it;
+              return {
+                uri: t.trackUri || t.track_uri || t.uri || null,
+                title: t.trackName || t.track_name || t.name || null,
+                artist: t.artistName || t.artist_name || t.artists && t.artists[0] && t.artists[0].name || null,
+                album: t.albumName || t.album_name || t.album && t.album.name || null,
+                duration_ms: t.durationMs || t.duration_ms || null
+              };
+            }).filter((x) => x.title && x.artist);
+            return {
+              name: p.name || "Spotify playlist",
+              description: p.description || "",
+              lastModified: p.lastModifiedDate || p.last_modified_date || null,
+              items
+            };
+          }).filter((p) => p.items.length);
+          if (playlists.length) return { kind: "playlists", data: playlists };
+        }
+        if (data && Array.isArray(data.tracks) && (data.tracks.length === 0 || data.tracks[0].track)) {
+          const tracks = data.tracks.map((t) => ({
+            uri: t.uri || null,
+            title: t.track || null,
+            artist: t.artist || null,
+            album: t.album || null
+          })).filter((x) => x.title && x.artist);
+          return { kind: "library", data: tracks };
+        }
+        if (Array.isArray(data) && data.length && (data[0].master_metadata_track_name !== void 0 || data[0].spotify_track_uri !== void 0)) {
+          const entries = data.map((e) => ({
+            ts: e.ts ? Date.parse(e.ts) : null,
+            title: e.master_metadata_track_name || null,
+            artist: e.master_metadata_album_artist_name || null,
+            album: e.master_metadata_album_album_name || null,
+            uri: e.spotify_track_uri || null,
+            ms_played: e.ms_played || 0
+          })).filter((x) => x.ts && x.title && x.artist);
+          return { kind: "history", data: entries };
+        }
+        if (Array.isArray(data) && data.length && data[0].endTime && data[0].trackName) {
+          const entries = data.map((e) => ({
+            ts: Date.parse(String(e.endTime).replace(" ", "T") + (String(e.endTime).includes("Z") ? "" : "Z")),
+            title: e.trackName,
+            artist: e.artistName,
+            album: null,
+            uri: null,
+            ms_played: e.msPlayed || 0
+          })).filter((x) => x.ts && x.title && x.artist);
+          return { kind: "history", data: entries };
+        }
+        return { kind: "unknown", data: null };
+      }
+      function playlistContentHash(playlist) {
+        const canonical = playlist.name + "\n" + playlist.items.map((i) => i.uri || `${normalize(i.artist)}|${normalize(i.title)}|${normalize(i.album)}`).join("\n");
+        return sha1String(canonical);
+      }
+      function libraryCandidates(db) {
+        return db.all(
+          "SELECT id, title, artist, album, duration_ms, isrc FROM tracks WHERE missing = 0"
+        );
+      }
+      function matchEntry(db, candidates, req) {
+        return decide(
+          { title: req.title, artist: req.artist, album: req.album, duration_ms: req.duration_ms, isrc: req.isrc },
+          candidates
+        );
+      }
+      function insertEntry(db, playlistId, position, item, outcome) {
+        db.exec(
+          `INSERT INTO playlist_entries
+       (playlist_id, position, track_id, status, req_artist, req_title, req_album, req_duration_ms, spotify_uri, candidates)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [
+            playlistId,
+            position,
+            outcome.status === "matched" ? outcome.trackId : null,
+            outcome.status,
+            item.artist,
+            item.title,
+            item.album,
+            item.duration_ms || null,
+            item.uri || null,
+            outcome.candidates ? JSON.stringify(outcome.candidates) : null
+          ]
+        );
+      }
+      function importPlaylists(db, playlists, now) {
+        const summary = [];
+        for (const pl of playlists) {
+          const hash = playlistContentHash(pl);
+          const existing = db.get("SELECT id, content_hash FROM playlists WHERE name = ? AND source = ?", [pl.name, "spotify"]);
+          if (existing && existing.content_hash === hash) {
+            summary.push({ name: pl.name, matched: null, review: null, missing: null, skipped: "identical" });
+            continue;
+          }
+          const candidates = libraryCandidates(db);
+          let counts = { matched: 0, review: 0, missing: 0 };
+          db.transaction(() => {
+            let playlistId;
+            if (existing) {
+              playlistId = existing.id;
+              db.exec("DELETE FROM playlist_entries WHERE playlist_id = ?", [playlistId]);
+              db.exec("UPDATE playlists SET content_hash = ?, updated_at = ? WHERE id = ?", [hash, now, playlistId]);
+            } else {
+              playlistId = db.exec(
+                "INSERT INTO playlists (name, source, content_hash, created_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+                [pl.name, "spotify", hash, now, now]
+              );
+            }
+            pl.items.forEach((item, idx) => {
+              const outcome = matchEntry(db, candidates, item);
+              counts[outcome.status] += 1;
+              insertEntry(db, playlistId, idx, item, outcome);
+            });
+          });
+          summary.push({ name: pl.name, ...counts, skipped: null });
+        }
+        return summary;
+      }
+      function importSavedTracks(db, tracks, now) {
+        const hash = sha1String("your-library\n" + tracks.map((t) => t.uri || `${normalize(t.artist)}|${normalize(t.title)}`).join("\n"));
+        const existing = db.get("SELECT id, content_hash FROM playlists WHERE name = ? AND source = ?", ["Liked Songs (Spotify)", "spotify"]);
+        if (existing && existing.content_hash === hash) {
+          return { matched: null, review: null, missing: null, skipped: "identical" };
+        }
+        const candidates = libraryCandidates(db);
+        const counts = { matched: 0, review: 0, missing: 0 };
+        db.transaction(() => {
+          let playlistId;
+          if (existing) {
+            playlistId = existing.id;
+            db.exec("DELETE FROM playlist_entries WHERE playlist_id = ?", [playlistId]);
+            db.exec("UPDATE playlists SET content_hash = ?, updated_at = ? WHERE id = ?", [hash, now, playlistId]);
+          } else {
+            playlistId = db.exec(
+              "INSERT INTO playlists (name, source, content_hash, created_at, updated_at) VALUES (?, ?, ?, ?, ?)",
+              ["Liked Songs (Spotify)", "spotify", hash, now, now]
+            );
+          }
+          tracks.forEach((item, idx) => {
+            const outcome = matchEntry(db, candidates, item);
+            counts[outcome.status] += 1;
+            insertEntry(db, playlistId, idx, item, outcome);
+          });
+        });
+        return { ...counts, skipped: null };
+      }
+      function importHistory(db, entries) {
+        let imported = 0, duplicates = 0;
+        db.transaction(() => {
+          for (const e of entries) {
+            const key = `sp:${e.uri || normalize(e.artist) + "|" + normalize(e.title)}:${e.ts}`;
+            const dup = db.get("SELECT id FROM history WHERE dedupe_key = ?", [key]);
+            if (dup) {
+              duplicates += 1;
+              continue;
+            }
+            const candidates = libraryCandidates(db);
+            const outcome = matchEntry(db, candidates, {
+              title: e.title,
+              artist: e.artist,
+              album: e.album,
+              duration_ms: null
+            });
+            const trackId = outcome.status === "matched" ? outcome.trackId : null;
+            db.exec(
+              `INSERT INTO history (track_id, spotify_uri, artist, title, played_at, ms_listened, duration_ms, skipped, source, dedupe_key)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'spotify', ?)`,
+              [trackId, e.uri, e.artist, e.title, e.ts, e.ms_played, null, 0, key]
+            );
+            imported += 1;
+          }
+        });
+        return { imported, duplicates };
+      }
+      function relinkUnmatchedEntries(db) {
+        const rows = db.all(
+          `SELECT id, req_artist, req_title, req_album, req_duration_ms FROM playlist_entries
+     WHERE status IN ('missing') AND track_id IS NULL`
+        );
+        if (!rows.length) return { linked: 0 };
+        const candidates = libraryCandidates(db);
+        let linked = 0;
+        db.transaction(() => {
+          for (const row of rows) {
+            const outcome = decide(
+              { title: row.req_title, artist: row.req_artist, album: row.req_album, duration_ms: row.req_duration_ms },
+              candidates
+            );
+            if (outcome.status === "matched") {
+              db.exec("UPDATE playlist_entries SET track_id = ?, status = ? WHERE id = ?", [outcome.trackId, "matched", row.id]);
+              linked += 1;
+            } else if (outcome.status === "review") {
+              db.exec(
+                "UPDATE playlist_entries SET status = ?, candidates = ? WHERE id = ?",
+                ["review", JSON.stringify(outcome.candidates), row.id]
+              );
+            }
+          }
+        });
+        return { linked };
+      }
+      function importSpotifyExport(db, files, now) {
+        now = now || Date.now();
+        const result = { playlists: [], library: null, history: { imported: 0, duplicates: 0 }, files: [] };
+        for (const f of files) {
+          const parsed = parseSpotifyFile(f.name, f.text);
+          result.files.push({ name: f.name, kind: parsed ? parsed.kind : "unknown" });
+          if (!parsed || parsed.kind === "unknown") continue;
+          if (parsed.kind === "playlists") {
+            result.playlists.push(...importPlaylists(db, parsed.data, now));
+          } else if (parsed.kind === "library") {
+            result.library = importSavedTracks(db, parsed.data, now);
+          } else if (parsed.kind === "history") {
+            const h = importHistory(db, parsed.data);
+            result.history.imported += h.imported;
+            result.history.duplicates += h.duplicates;
+          }
+        }
+        return result;
+      }
+      module2.exports = {
+        parseSpotifyFile,
+        importSpotifyExport,
+        importPlaylists,
+        importHistory,
+        relinkUnmatchedEntries,
+        playlistContentHash
+      };
+    }
+  });
+
   // node_modules/@capacitor/core/dist/index.cjs.js
   var require_index_cjs = __commonJS({
     "node_modules/@capacitor/core/dist/index.cjs.js"(exports2) {
@@ -24515,6 +24845,7 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
       init_buffer_global();
       var recs = require_recs();
       var stats = require_stats();
+      var spotify = require_spotify();
       var importer = require_import();
       var db = null;
       var changeListeners = [];
@@ -24691,10 +25022,35 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
         async importFiles(fileList, onProgress) {
           const out = await importer.importFiles(db, fileList, onProgress);
           if (out.imported) {
+            spotify.relinkUnmatchedEntries(db);
             db.save();
             emitChange();
           } else db.saveSoon();
           return out;
+        },
+        // ---- Spotify export import + playlists ----
+        playlists() {
+          return db.all(`SELECT p.id, p.name, p.source,
+        COUNT(e.id) AS entries,
+        SUM(CASE WHEN e.status = 'matched' THEN 1 ELSE 0 END) AS matched
+      FROM playlists p LEFT JOIN playlist_entries e ON e.playlist_id = p.id
+      GROUP BY p.id ORDER BY p.updated_at DESC`);
+        },
+        playlistEntries(id) {
+          return db.all(`SELECT e.id AS entry_id, e.position, e.status,
+        e.req_title, e.req_artist, e.req_album, e.req_duration_ms,
+        t.id, t.title, t.artist, t.album, t.duration_ms
+      FROM playlist_entries e LEFT JOIN tracks t ON t.id = e.track_id
+      WHERE e.playlist_id = ? ORDER BY e.position`, [id]);
+        },
+        async importSpotify(fileList) {
+          const files = [];
+          for (const f of fileList) files.push({ name: f.name, text: await f.text() });
+          const result = spotify.importSpotifyExport(db, files);
+          spotify.relinkUnmatchedEntries(db);
+          db.save();
+          emitChange();
+          return result;
         }
       };
       module2.exports = { install };
@@ -25116,6 +25472,7 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
       var libView = "artists";
       var openArtist = null;
       var openAlbum = null;
+      var openPlaylist = null;
       var artCache = /* @__PURE__ */ new Map();
       async function artOf(id) {
         if (!id) return null;
@@ -25183,8 +25540,25 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
     <button class="seg-btn ${libView === "artists" && !openArtist && !openAlbum ? "on" : ""}" data-lib="artists">Artists</button>
     <button class="seg-btn ${libView === "albums" && !openArtist && !openAlbum ? "on" : ""}" data-lib="albums">Albums</button>
     <button class="seg-btn ${libView === "songs" ? "on" : ""}" data-lib="songs">Songs</button>
+    <button class="seg-btn ${libView === "playlists" && openPlaylist == null ? "on" : ""}" data-lib="playlists">Playlists</button>
   </div>`;
-        if (openArtist) {
+        if (openPlaylist != null) {
+          const pl = window.ec.playlists().find((x) => x.id === openPlaylist);
+          const entries = window.ec.playlistEntries(openPlaylist);
+          const playableIds = entries.filter((e) => e.id != null).map((e) => e.id);
+          html += `<div class="section-head"><button class="pill" data-back-lib>\u2039 Playlists</button>
+      <h3>${esc(pl ? pl.name : "Playlist")}</h3>${playableIds.length ? `<button class="pill" data-play-queue='${JSON.stringify(playableIds)}'>Play</button>` : ""}</div>` + (entries.map((e) => {
+            if (e.id != null) {
+              const t = { id: e.id, title: e.title, artist: e.artist, album: e.album, duration_ms: e.duration_ms };
+              const qi = playableIds.indexOf(e.id);
+              return trackRow(t, playableIds, qi);
+            }
+            return `<div class="row dim">
+          <div class="row-main"><div class="row-title">${esc(e.req_title)}</div>
+          <div class="row-sub">${esc(e.req_artist)}${e.req_album ? " \xB7 " + esc(e.req_album) : ""} \xB7 add the audio file and it links up</div></div>
+          <div class="row-dur">${fmtMs(e.req_duration_ms)}</div></div>`;
+          }).join("") || '<p class="dim pad">Empty playlist.</p>');
+        } else if (openArtist) {
           const tracks = window.ec.artistTracks(openArtist);
           const ids = tracks.map((t) => t.id);
           html += `<div class="section-head"><button class="pill" data-back-lib>\u2039 Artists</button>
@@ -25208,6 +25582,11 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
         <div class="row-main"><div class="row-title">${esc(a.name)}</div>
         <div class="row-sub">${esc(a.artist)} \xB7 ${a.tracks} song${a.tracks === 1 ? "" : "s"}</div></div>
       </div>`).join("") || '<p class="dim pad">No albums yet.</p>';
+        } else if (libView === "playlists") {
+          html += window.ec.playlists().map((p) => `<div class="row" data-open-playlist="${p.id}">
+        <div class="row-main"><div class="row-title">${esc(p.name)}</div>
+        <div class="row-sub">${p.matched || 0}/${p.entries || 0} playable${p.source === "spotify" ? " \xB7 from Spotify" : ""}</div></div>
+      </div>`).join("") || '<p class="dim pad">No playlists yet. Import your Spotify export in Settings.</p>';
         } else {
           const tracks = window.ec.tracks({ limit: 500 });
           const ids = tracks.map((t) => t.id);
@@ -25264,11 +25643,18 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
       <div id="import-status" class="dim small"></div>
     </div>
     <div class="card-block">
+      <div class="row-title">Import from Spotify</div>
+      <div class="row-sub">Bring your playlists and listening history. On spotify.com: Profile \u203A Account \u203A Privacy settings \u203A Download your data. When the email arrives, open the zip in Files, then pick the Playlist and YourLibrary JSON files here. Songs you don't have as audio stay in their playlist spots and link up when you add them.</div>
+      <button class="btn" id="spotify-btn">Choose Spotify files</button>
+      <div id="spotify-status" class="dim small"></div>
+    </div>
+    <div class="card-block">
       <div class="row-title">About</div>
-      <div class="row-sub">Echocellar 0.1.0 for Android \xB7 open source (MIT) \xB7 works fully offline. No account, no ads, no tracking.</div>
-      <div class="row-sub dim small">ALAC files are not playable on Android in this version and are skipped on import.</div>
+      <div class="row-sub">Echocellar 0.1.0 \xB7 open source (MIT) \xB7 works fully offline. No account, no ads, no tracking.</div>
+      <div class="row-sub dim small">ALAC files are not playable on this version and are skipped on import.</div>
     </div>`;
         $("#import-btn").addEventListener("click", () => $("#file-input").click());
+        $("#spotify-btn").addEventListener("click", () => $("#spotify-input").click());
       }
       function render() {
         const view = $("#view");
@@ -25403,8 +25789,33 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
             e.target.value = "";
           }
         });
+        $("#spotify-input").addEventListener("change", async (e) => {
+          const files = e.target.files;
+          if (!files || !files.length) return;
+          const status = $("#spotify-status");
+          try {
+            if (status) status.textContent = "Reading Spotify export\u2026";
+            const r = await window.ec.importSpotify(files);
+            const parts = [];
+            for (const p of r.playlists) {
+              if (p.skipped === "identical") parts.push(`"${p.name}" already imported.`);
+              else parts.push(`Playlist "${p.name}": ${p.matched}/${p.matched + p.review + p.missing} playable.`);
+            }
+            if (r.library && r.library.skipped !== "identical" && r.library.matched != null)
+              parts.push(`Liked Songs: ${r.library.matched}/${r.library.matched + r.library.review + r.library.missing} playable.`);
+            if (r.history.imported)
+              parts.push(`${r.history.imported} history entries imported (${r.history.duplicates} duplicates skipped).`);
+            const unknown = r.files.filter((f) => f.kind === "unknown");
+            if (unknown.length) parts.push(`Not recognized: ${unknown.map((f) => f.name).join(", ")}.`);
+            if (status) status.textContent = parts.join(" ") || "Nothing new found in those files.";
+          } catch (err) {
+            if (status) status.textContent = "Import failed: " + String(err && err.message || err);
+          } finally {
+            e.target.value = "";
+          }
+        });
         document.addEventListener("click", (ev) => {
-          const el = ev.target.closest("[data-play-at], [data-play-queue], [data-shuffle-queue], [data-radio-artist], [data-open-artist], [data-open-album], [data-back-lib], [data-lib]");
+          const el = ev.target.closest("[data-play-at], [data-play-queue], [data-shuffle-queue], [data-radio-artist], [data-open-artist], [data-open-album], [data-open-playlist], [data-back-lib], [data-lib]");
           if (!el) return;
           if (el.dataset.playQueue) {
             Player.playQueue(JSON.parse(el.dataset.playQueue), 0);
@@ -25424,14 +25835,22 @@ CREATE TABLE IF NOT EXISTS settings (key TEXT PRIMARY KEY, value TEXT);
             openAlbum = el.dataset.openAlbum;
             openArtist = null;
             render();
+          } else if (el.dataset.openPlaylist) {
+            openPlaylist = Number(el.dataset.openPlaylist);
+            libView = "playlists";
+            openArtist = null;
+            openAlbum = null;
+            render();
           } else if (el.dataset.backLib != null) {
             openArtist = null;
             openAlbum = null;
+            openPlaylist = null;
             render();
           } else if (el.dataset.lib) {
             libView = el.dataset.lib;
             openArtist = null;
             openAlbum = null;
+            openPlaylist = null;
             render();
           }
         });

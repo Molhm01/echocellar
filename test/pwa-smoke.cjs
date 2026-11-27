@@ -47,6 +47,25 @@ async function main() {
   console.log('BOOT', JSON.stringify(boot));
   if (!boot.hasEc) { console.log('PWA SMOKE FAIL (boot)'); app.exit(1); return; }
 
+  // Spotify export import first, on an empty library: every entry becomes a
+  // placeholder; the audio import below must auto-link them (relink path).
+  const spotFiles = fs.readdirSync(path.join(FIX, 'spotify'))
+    .filter((f) => f.endsWith('.json'))
+    .map((f) => ({ name: f, b64: fs.readFileSync(path.join(FIX, 'spotify', f)).toString('base64') }));
+  const spot = await win.webContents.executeJavaScript(`(async () => {
+    const files = ${JSON.stringify(spotFiles)}.map((p) =>
+      new File([atob(p.b64)], p.name, { type: 'application/json' }));
+    const r = await window.ec.importSpotify(files);
+    const pls = window.ec.playlists();
+    const entries = pls.length ? window.ec.playlistEntries(pls[0].id) : [];
+    return { result: r, playlists: pls, firstEntries: entries.map((e) => ({ status: e.status, title: e.title || e.req_title })) };
+  })()`);
+  console.log('SPOTIFY', JSON.stringify(spot));
+  const spotOk = spot.playlists.length >= 1
+    && spot.result.history.imported === 3
+    && spot.firstEntries.length === 3
+    && spot.firstEntries.every((e) => e.status === 'missing');
+
   const audioFiles = [];
   (function walk(d) {
     for (const f of fs.readdirSync(d, { withFileTypes: true })) {
@@ -83,6 +102,15 @@ async function main() {
   })()`);
   console.log('IMPORT_PLAY', JSON.stringify(imp));
 
+  // After audio import, the Spotify placeholders must have linked up.
+  const relink = await win.webContents.executeJavaScript(`(() => {
+    const pls = window.ec.playlists();
+    const entries = pls.length ? window.ec.playlistEntries(pls[0].id) : [];
+    return { playlists: pls, entries: entries.map((e) => ({ status: e.status, title: e.title || e.req_title })) };
+  })()`);
+  console.log('RELINK', JSON.stringify(relink));
+  const relinkOk = relink.entries.length === 3 && relink.entries.every((e) => e.status === 'matched');
+
   // Persistence across reload (IndexedDB-backed Filesystem + DB).
   await new Promise((r) => setTimeout(r, 1500));
   await win.reload();
@@ -96,7 +124,7 @@ async function main() {
   console.log('SW', JSON.stringify(sw));
 
   const okPlayback = imp.playback && !imp.playback.error && imp.playback.duration > 0;
-  const pass = boot.hasEc && imp.imported === 2 && okPlayback && persist.tracks === 2 && sw.registered;
+  const pass = boot.hasEc && imp.imported === 2 && okPlayback && persist.tracks === 2 && sw.registered && spotOk && relinkOk;
   console.log(pass ? 'PWA SMOKE PASS' : 'PWA SMOKE FAIL');
   srv.close();
   app.exit(pass ? 0 : 1);

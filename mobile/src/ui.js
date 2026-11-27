@@ -17,6 +17,7 @@ let tab = 'home';
 let libView = 'artists';
 let openArtist = null;
 let openAlbum = null;
+let openPlaylist = null;
 
 const artCache = new Map();
 async function artOf(id) {
@@ -92,8 +93,26 @@ function renderLibrary(view) {
     <button class="seg-btn ${libView === 'artists' && !openArtist && !openAlbum ? 'on' : ''}" data-lib="artists">Artists</button>
     <button class="seg-btn ${libView === 'albums' && !openArtist && !openAlbum ? 'on' : ''}" data-lib="albums">Albums</button>
     <button class="seg-btn ${libView === 'songs' ? 'on' : ''}" data-lib="songs">Songs</button>
+    <button class="seg-btn ${libView === 'playlists' && openPlaylist == null ? 'on' : ''}" data-lib="playlists">Playlists</button>
   </div>`;
-  if (openArtist) {
+  if (openPlaylist != null) {
+    const pl = window.ec.playlists().find((x) => x.id === openPlaylist);
+    const entries = window.ec.playlistEntries(openPlaylist);
+    const playableIds = entries.filter((e) => e.id != null).map((e) => e.id);
+    html += `<div class="section-head"><button class="pill" data-back-lib>‹ Playlists</button>
+      <h3>${esc(pl ? pl.name : 'Playlist')}</h3>${playableIds.length ? `<button class="pill" data-play-queue='${JSON.stringify(playableIds)}'>Play</button>` : ''}</div>` +
+      (entries.map((e) => {
+        if (e.id != null) {
+          const t = { id: e.id, title: e.title, artist: e.artist, album: e.album, duration_ms: e.duration_ms };
+          const qi = playableIds.indexOf(e.id);
+          return trackRow(t, playableIds, qi);
+        }
+        return `<div class="row dim">
+          <div class="row-main"><div class="row-title">${esc(e.req_title)}</div>
+          <div class="row-sub">${esc(e.req_artist)}${e.req_album ? ' · ' + esc(e.req_album) : ''} · add the audio file and it links up</div></div>
+          <div class="row-dur">${fmtMs(e.req_duration_ms)}</div></div>`;
+      }).join('') || '<p class="dim pad">Empty playlist.</p>');
+  } else if (openArtist) {
     const tracks = window.ec.artistTracks(openArtist);
     const ids = tracks.map((t) => t.id);
     html += `<div class="section-head"><button class="pill" data-back-lib>‹ Artists</button>
@@ -119,6 +138,12 @@ function renderLibrary(view) {
         <div class="row-main"><div class="row-title">${esc(a.name)}</div>
         <div class="row-sub">${esc(a.artist)} · ${a.tracks} song${a.tracks === 1 ? '' : 's'}</div></div>
       </div>`).join('') || '<p class="dim pad">No albums yet.</p>';
+  } else if (libView === 'playlists') {
+    html += window.ec.playlists().map((p) =>
+      `<div class="row" data-open-playlist="${p.id}">
+        <div class="row-main"><div class="row-title">${esc(p.name)}</div>
+        <div class="row-sub">${p.matched || 0}/${p.entries || 0} playable${p.source === 'spotify' ? ' · from Spotify' : ''}</div></div>
+      </div>`).join('') || '<p class="dim pad">No playlists yet. Import your Spotify export in Settings.</p>';
   } else {
     const tracks = window.ec.tracks({ limit: 500 });
     const ids = tracks.map((t) => t.id);
@@ -179,11 +204,18 @@ function renderSettings(view) {
       <div id="import-status" class="dim small"></div>
     </div>
     <div class="card-block">
+      <div class="row-title">Import from Spotify</div>
+      <div class="row-sub">Bring your playlists and listening history. On spotify.com: Profile › Account › Privacy settings › Download your data. When the email arrives, open the zip in Files, then pick the Playlist and YourLibrary JSON files here. Songs you don't have as audio stay in their playlist spots and link up when you add them.</div>
+      <button class="btn" id="spotify-btn">Choose Spotify files</button>
+      <div id="spotify-status" class="dim small"></div>
+    </div>
+    <div class="card-block">
       <div class="row-title">About</div>
-      <div class="row-sub">Echocellar 0.1.0 for Android · open source (MIT) · works fully offline. No account, no ads, no tracking.</div>
-      <div class="row-sub dim small">ALAC files are not playable on Android in this version and are skipped on import.</div>
+      <div class="row-sub">Echocellar 0.1.0 · open source (MIT) · works fully offline. No account, no ads, no tracking.</div>
+      <div class="row-sub dim small">ALAC files are not playable on this version and are skipped on import.</div>
     </div>`;
   $('#import-btn').addEventListener('click', () => $('#file-input').click());
+  $('#spotify-btn').addEventListener('click', () => $('#spotify-input').click());
 }
 
 // ---------- shell ----------
@@ -314,9 +346,35 @@ function start() {
     }
   });
 
+  $('#spotify-input').addEventListener('change', async (e) => {
+    const files = e.target.files;
+    if (!files || !files.length) return;
+    const status = $('#spotify-status');
+    try {
+      if (status) status.textContent = 'Reading Spotify export…';
+      const r = await window.ec.importSpotify(files);
+      const parts = [];
+      for (const p of r.playlists) {
+        if (p.skipped === 'identical') parts.push(`"${p.name}" already imported.`);
+        else parts.push(`Playlist "${p.name}": ${p.matched}/${p.matched + p.review + p.missing} playable.`);
+      }
+      if (r.library && r.library.skipped !== 'identical' && r.library.matched != null)
+        parts.push(`Liked Songs: ${r.library.matched}/${r.library.matched + r.library.review + r.library.missing} playable.`);
+      if (r.history.imported)
+        parts.push(`${r.history.imported} history entries imported (${r.history.duplicates} duplicates skipped).`);
+      const unknown = r.files.filter((f) => f.kind === 'unknown');
+      if (unknown.length) parts.push(`Not recognized: ${unknown.map((f) => f.name).join(', ')}.`);
+      if (status) status.textContent = parts.join(' ') || 'Nothing new found in those files.';
+    } catch (err) {
+      if (status) status.textContent = 'Import failed: ' + String(err && err.message || err);
+    } finally {
+      e.target.value = '';
+    }
+  });
+
   // Global delegation for play actions.
   document.addEventListener('click', (ev) => {
-    const el = ev.target.closest('[data-play-at], [data-play-queue], [data-shuffle-queue], [data-radio-artist], [data-open-artist], [data-open-album], [data-back-lib], [data-lib]');
+    const el = ev.target.closest('[data-play-at], [data-play-queue], [data-shuffle-queue], [data-radio-artist], [data-open-artist], [data-open-album], [data-open-playlist], [data-back-lib], [data-lib]');
     if (!el) return;
     if (el.dataset.playQueue) {
       Player.playQueue(JSON.parse(el.dataset.playQueue), 0);
@@ -332,10 +390,12 @@ function start() {
       openArtist = el.dataset.openArtist; openAlbum = null; render();
     } else if (el.dataset.openAlbum) {
       openAlbum = el.dataset.openAlbum; openArtist = null; render();
+    } else if (el.dataset.openPlaylist) {
+      openPlaylist = Number(el.dataset.openPlaylist); libView = 'playlists'; openArtist = null; openAlbum = null; render();
     } else if (el.dataset.backLib != null) {
-      openArtist = null; openAlbum = null; render();
+      openArtist = null; openAlbum = null; openPlaylist = null; render();
     } else if (el.dataset.lib) {
-      libView = el.dataset.lib; openArtist = null; openAlbum = null; render();
+      libView = el.dataset.lib; openArtist = null; openAlbum = null; openPlaylist = null; render();
     }
   });
 
