@@ -107,15 +107,36 @@ const api = {
   artistRadio(artist, limit = 25) { return recs.artistRadio(db, artist, limit); },
 
   // ---- playback sources ----
+  // Native (Android): stream from app storage through Capacitor's local
+  // server. Web (the installable iOS PWA): read the file and hand out a blob
+  // URL, cached per path so repeated plays don't re-decode.
+  _urlCache: new Map(),
+  async _fileUrl(relPath, mime) {
+    const { Capacitor } = require('@capacitor/core');
+    const { Filesystem, Directory, Encoding } = require('@capacitor/filesystem');
+    if (Capacitor.getPlatform() !== 'web') {
+      const r = await Filesystem.getUri({ path: relPath, directory: Directory.Data });
+      return Capacitor.convertFileSrc(r.uri);
+    }
+    const key = relPath;
+    if (api._urlCache.has(key)) return api._urlCache.get(key);
+    const r = await Filesystem.readFile({ path: relPath, directory: Directory.Data, encoding: Encoding.Base64 });
+    const { base64ToBytes } = require('./b64');
+    const blob = new Blob([base64ToBytes(r.data)], { type: mime || 'application/octet-stream' });
+    const url = URL.createObjectURL(blob);
+    api._urlCache.set(key, url);
+    return url;
+  },
   async playSrc(id) {
     const t = api.track(id);
     if (!t) return { error: 'missing' };
     if (t.codec && /alac/i.test(t.codec)) return { error: 'unsupported', codec: 'ALAC' };
     try {
-      const { Filesystem, Directory } = require('@capacitor/filesystem');
-      const { Capacitor } = require('@capacitor/core');
-      const r = await Filesystem.getUri({ path: t.path, directory: Directory.Data });
-      return { url: Capacitor.convertFileSrc(r.uri), track: t };
+      const mime = ({ mp3: 'audio/mpeg', flac: 'audio/flac', ogg: 'audio/ogg', oga: 'audio/ogg',
+        opus: 'audio/ogg', m4a: 'audio/mp4', aac: 'audio/aac', wav: 'audio/wav',
+        webm: 'audio/webm' })[(t.path.split('.').pop() || '').toLowerCase()] || 'audio/*';
+      const url = await api._fileUrl(t.path, mime);
+      return { url, track: t };
     } catch (e) {
       return { error: 'io', message: String(e && e.message || e) };
     }
@@ -124,17 +145,15 @@ const api = {
     const t = api.track(id);
     if (!t || !t.art_path) return null;
     try {
-      const { Filesystem, Directory } = require('@capacitor/filesystem');
-      const { Capacitor } = require('@capacitor/core');
-      const r = await Filesystem.getUri({ path: t.art_path, directory: Directory.Data });
-      return Capacitor.convertFileSrc(r.uri);
+      const mime = t.art_path.endsWith('.png') ? 'image/png' : 'image/jpeg';
+      return await api._fileUrl(t.art_path, mime);
     } catch (e) { return null; }
   },
 
   // ---- import ----
   async importFiles(fileList, onProgress) {
     const out = await importer.importFiles(db, fileList, onProgress);
-    if (out.imported) emitChange(); else db.saveSoon();
+    if (out.imported) { db.save(); emitChange(); } else db.saveSoon();
     return out;
   },
 };

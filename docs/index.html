@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#171210">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Echocellar">
+  <title>Echocellar</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+  <div id="app"></div>
+  <audio id="ec-audio" preload="metadata"></audio>
+  <input id="file-input" type="file" accept="audio/*,.mp3,.flac,.ogg,.opus,.m4a,.aac,.wav,.webm" multiple hidden>
+  <script src="js/bundle.js"></script>
+  <script>
+    if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === '127.0.0.1' || location.hostname === 'localhost') &&
+        window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform() === 'web') {
+      navigator.serviceWorker.register('sw.js').catch(function () {});
+    }
+  </script>
+</body>
+</html>

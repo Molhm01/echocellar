@@ -91,7 +91,21 @@ const Player = {
     a.src = src.url;
     try { await a.play(); } catch (e) { console.error('play() failed', e); }
     this._openSession(id);
+    this._mediaSession(src.track);
     this._emit();
+  },
+
+  _mediaSession(t) {
+    if (!('mediaSession' in navigator) || !t) return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: t.title || '', artist: t.artist || '', album: t.album || '',
+      });
+      navigator.mediaSession.setActionHandler('play', () => this.toggle());
+      navigator.mediaSession.setActionHandler('pause', () => this.toggle());
+      navigator.mediaSession.setActionHandler('previoustrack', () => this.previous());
+      navigator.mediaSession.setActionHandler('nexttrack', () => this.next());
+    } catch (e) { /* older webviews */ }
   },
 
   async next() {
