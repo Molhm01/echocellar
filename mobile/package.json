@@ -16,6 +16,7 @@
     "@capacitor/cli": "^8.6.3",
     "@capacitor/core": "^8.6.3",
     "@capacitor/filesystem": "^8.1.5",
+    "@capacitor/ios": "^8.6.3",
     "buffer": "^6.0.3",
     "esbuild": "^0.24.2",
     "js-sha1": "^0.9.0",

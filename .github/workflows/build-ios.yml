@@ -1,0 +1,44 @@
+name: Build iOS app (simulator)
+on:
+  workflow_dispatch:
+  push:
+    tags: ['mobile-v*']
+permissions:
+  contents: write
+jobs:
+  build-and-sim-smoke:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build web bundle and sync
+        working-directory: mobile
+        run: |
+          npm ci
+          node build.cjs
+          npx cap sync ios
+      - name: Build for iOS Simulator (unsigned)
+        working-directory: mobile/ios/App
+        run: |
+          xcodebuild -project App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            CODE_SIGNING_ALLOWED=NO -derivedDataPath build build
+      - name: Boot simulator, install, launch, terminate
+        working-directory: mobile/ios/App
+        run: bash ../../../ci-scripts/ios-sim-smoke.sh
+      - name: Zip simulator app
+        working-directory: mobile/ios/App
+        run: |
+          APP_PATH=$(find build/Build/Products -name "App.app" -maxdepth 2 | head -1)
+          (cd "$(dirname "$APP_PATH")" && zip -qr "$OLDPWD/Echocellar-iOS-Simulator.zip" App.app)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: echocellar-ios-simulator-app
+          path: mobile/ios/App/Echocellar-iOS-Simulator.zip
+      - name: Attach to release (tag builds)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: mobile/ios/App/Echocellar-iOS-Simulator.zip
